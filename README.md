@@ -1,4 +1,6 @@
 Campanology
 ===========
 
-Experiments with change ringing
+Experiments with change ringing.
+
+
