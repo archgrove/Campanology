@@ -1,3 +1,5 @@
+import Data.List
+
 -- Standard types
 type Row = [Int]
 type Swap = (Int, Int)
@@ -10,11 +12,31 @@ data Method = Changes Int Symmetry [Change]
 
 plainHuntDoubles :: Method
 plainHuntDoubles = Changes 5 Symmetric [Make [5], Make [1], Make [5], Make [1]]
+plainHuntMinor :: Method
+plainHuntMinor = Changes 6 Symmetric [Exchange, Make [1, 6],
+                                     Exchange, Make [1, 6],
+                                     Exchange, Make [1, 6],
+                                     Exchange, Make [1, 6],
+                                     Exchange, Make [1, 6],
+                                     Exchange, Make [1, 6]]
 
--- Applys a method
+-- Applies a method
 -- Dependent types would really help here
 runMethod :: Method -> Course
 runMethod (Changes n s cs) = scanl applyChange (rounds n) cs
+
+printMethod :: Method -> IO [()]
+printMethod method = mapM putStrLn strings
+  where
+    strings = courseToStrings course
+    course = runMethod method
+
+courseToStrings :: Course -> [String]
+courseToStrings course = map rowToString course
+  where
+    rowToString :: Row -> String
+    rowToString row = intercalate " " (map show row)
+
 
 -- Apply a single change to a row
 -- Assumes the bells making places are in order
