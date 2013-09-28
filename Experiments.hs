@@ -27,10 +27,11 @@ applyChange row change = performChanges
     createSwaps bells 0 = tuple Odd bells
     createSwaps bells n = tuple Even bells
     -- This will be a list of lists, each sub-list a sequence of bells to move
-    changeSets = splitMany row makingPlaces
+    changeSets = splitMany (rounds n) makingPlaces
     makingPlaces = case change of 
       Exchange -> []
       Make ps -> ps 
+    n = length row
 
 -- Swaps two bells in a sequence
 swap :: Row -> Swap -> Row
