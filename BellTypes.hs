@@ -6,7 +6,7 @@ type Swap = (Int, Int)
 type Course = [Row]
 
 -- Place notation types
-data Change = Exchange | Make [Int]
-data Symmetry = Symmetric | Asymmetric
-data Group = UnknownGroup
-data Method = Changes Group Int Symmetry [Change]
+data Change = Exchange | Make [Int] deriving Show
+data Symmetry = Symmetric | Asymmetric deriving Show
+data Group = UnknownGroup deriving Show
+data Method = Changes Group Int Symmetry [Change] deriving Show
