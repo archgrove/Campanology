@@ -1,34 +1,15 @@
 import Data.List
-
--- Standard types
-type Row = [Int]
-type Swap = (Int, Int)
-type Course = [Row]
-
--- Place notation types
-data Change = Exchange | Make [Int]
-data Symmetry = Symmetric | Asymmetric
-data Method = Changes Int Symmetry [Change]
-
-plainHuntDoubles :: Method
-plainHuntDoubles = Changes 5 Symmetric [Make [5], Make [1], Make [5], Make [1]]
-plainHuntMinor :: Method
-plainHuntMinor = Changes 6 Symmetric [Exchange, Make [1, 6],
-                                     Exchange, Make [1, 6],
-                                     Exchange, Make [1, 6],
-                                     Exchange, Make [1, 6],
-                                     Exchange, Make [1, 6],
-                                     Exchange, Make [1, 6]]
+import BellTypes
 
 -- Applies a method
 -- Dependent types would really help here
 runMethod :: Method -> Course
-runMethod (Changes n Symmetric cs) =
+runMethod (Changes n g Symmetric cs) =
   if (even (length cs)) then
     scanl applyChange (rounds n) (cs ++ reverse cs)
   else
   scanl applyChange (rounds n) (cs ++ (drop 1 (reverse cs)))
-runMethod (Changes n Asymmetric cs) = scanl applyChange (rounds n) cs
+runMethod (Changes n g Asymmetric cs) = scanl applyChange (rounds n) cs
 
 printMethod :: Method -> IO [()]
 printMethod method = mapM putStrLn strings
