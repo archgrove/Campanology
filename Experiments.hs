@@ -23,7 +23,12 @@ plainHuntMinor = Changes 6 Symmetric [Exchange, Make [1, 6],
 -- Applies a method
 -- Dependent types would really help here
 runMethod :: Method -> Course
-runMethod (Changes n s cs) = scanl applyChange (rounds n) cs
+runMethod (Changes n Symmetric cs) =
+  if (even (length cs)) then
+    scanl applyChange (rounds n) (cs ++ reverse cs)
+  else
+  scanl applyChange (rounds n) (cs ++ (drop 1 (reverse cs)))
+runMethod (Changes n Asymmetric cs) = scanl applyChange (rounds n) cs
 
 printMethod :: Method -> IO [()]
 printMethod method = mapM putStrLn strings
@@ -109,4 +114,3 @@ mapIndex f xs = mapAt f 0 xs
     mapAt :: (a -> Int -> b) -> Int -> [a] -> [b]
     mapAt f n [] = []
     mapAt f n (x:xs) = (f x n):(mapAt f (n + 1) xs)
-
