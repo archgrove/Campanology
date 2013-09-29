@@ -4,12 +4,12 @@ import BellTypes
 -- Applies a method
 -- Dependent types would really help here
 runMethod :: Method -> Course
-runMethod (Changes n g Symmetric cs) =
+runMethod (Changes g n Symmetric cs) =
   if (even (length cs)) then
     scanl applyChange (rounds n) (cs ++ reverse cs)
   else
   scanl applyChange (rounds n) (cs ++ (drop 1 (reverse cs)))
-runMethod (Changes n g Asymmetric cs) = scanl applyChange (rounds n) cs
+runMethod (Changes g n Asymmetric cs) = scanl applyChange (rounds n) cs
 
 printMethod :: Method -> IO [()]
 printMethod method = mapM putStrLn strings

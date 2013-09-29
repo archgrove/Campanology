@@ -9,4 +9,4 @@ type Course = [Row]
 data Change = Exchange | Make [Int]
 data Symmetry = Symmetric | Asymmetric
 data Group = UnknownGroup
-data Method = Changes Int Group Symmetry [Change]
+data Method = Changes Group Int Symmetry [Change]
